@@ -9,7 +9,7 @@ The app connects to Mailchimp API using an API key and has 3 functions:
 
 ### How do I get set up? ###
 
-* Powered by [Laravel PHP](https://laravel.com).
+Powered by [Laravel PHP](https://laravel.com).
 Make sure server meets the following requirements:
 
 * PHP >= 5.6.4
