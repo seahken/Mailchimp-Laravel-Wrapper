@@ -14,7 +14,7 @@ class MemberController extends Controller
     public function index($apiKey, $listId)
     {
         $auth = makeAuth($apiKey);
-        $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists/'. $listId . '/members';
+        $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists/'. $listId . '/members?count=1000';
 
         $response = mailChimpRequest($auth, $url);
 

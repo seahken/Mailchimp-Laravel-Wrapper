@@ -15,7 +15,7 @@ class Controller extends BaseController
     public function data($apiKey)
     {
         $auth = makeAuth($apiKey);
-        $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists';
+        $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists?count=1000';
         $response = mailChimpRequest($auth, $url);
 
         // dd($response['lists']);

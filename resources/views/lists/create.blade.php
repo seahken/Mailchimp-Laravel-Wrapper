@@ -17,14 +17,11 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
+                    <label class="col-md-4 control-label">API Key</label>
 
-                        <div class="form-group{{ $errors->has('data-center') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">API Key</label>
-
-                            <div class="col-md-6">
-                                <p>{{ $key }}</p>
-                            </div>
-                        </div>
+                    <div class="col-md-6">
+                        <p>{{ $key }}</p>
+                    </div>                  
 
                 </div>
             </div>
