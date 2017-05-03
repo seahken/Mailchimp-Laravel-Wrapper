@@ -4,6 +4,16 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/{{$key}}">Home</a></li>
+                <li class="breadcrumb-item"><a href="/{{$key}}/lists/{{$list['id']}}">List</a></li>
+                <li class="breadcrumb-item"><a href="/{{$key}}/lists/{{$list['id']}}/members/">Member</a></li>
+                <li class="breadcrumb-item active">Create</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Dashboard</div>
 
@@ -31,7 +41,7 @@
                         <div class="form-group">
                             <label for="email_address">Email</label>
                             <input type="text" class="form-control" id="email_address" name="email_address">
-                        </div>                        
+                        </div>
                         <div class="form-group">
                             <label for="status">Status</label>
                             <select class="form-control" id="status" name="status">

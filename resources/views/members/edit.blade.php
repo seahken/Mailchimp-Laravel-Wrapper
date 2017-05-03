@@ -4,6 +4,16 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/{{$key}}">Home</a></li>
+                <li class="breadcrumb-item"><a href="/{{$key}}/lists/{{$listId}}">List</a></li>
+                <li class="breadcrumb-item"><a href="/{{$key}}/lists/{{$listId}}/members/">Member</a></li>
+                <li class="breadcrumb-item active">Edit</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Dashboard</div>
 
