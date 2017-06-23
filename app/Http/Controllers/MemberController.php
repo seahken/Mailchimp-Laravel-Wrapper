@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mailchimp;
 
 class MemberController extends Controller
 {
@@ -13,10 +14,10 @@ class MemberController extends Controller
      */
     public function index($apiKey, $listId)
     {
-        $auth = makeAuth($apiKey);
+        $auth = Mailchimp::makeAuth($apiKey);
         $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists/'. $listId . '/members?count=1000';
 
-        $response = mailChimpRequest($auth, $url);
+        $response = Mailchimp::request($auth, $url);
 
         return view('members.index', ['key' => $apiKey, 'members'=>$response['members'], 'listId'=>$listId]);
     }
@@ -28,10 +29,10 @@ class MemberController extends Controller
      */
     public function create($apiKey, $listId)
     {
-        $auth = makeAuth($apiKey);
+        $auth = Mailchimp::makeAuth($apiKey);
         $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists/'. $listId;
 
-        $response = mailChimpRequest($auth, $url);
+        $response = Mailchimp::request($auth, $url);
         return view('members.create', ['key' => $apiKey, 'list'=>$response]);
     }
 
@@ -43,7 +44,7 @@ class MemberController extends Controller
      */
     public function store(Request $request, $apiKey, $listId)
     {
-        $auth = makeAuth($apiKey);
+        $auth = Mailchimp::makeAuth($apiKey);
         $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists/' . $listId . '/members';
 
         $body = '{
@@ -52,7 +53,7 @@ class MemberController extends Controller
 
         }';
 
-        $response = mailChimpRequest($auth, $url, 'POST', $body);
+        $response = Mailchimp::request($auth, $url, 'POST', $body);
 
         return redirect('/'.$apiKey. '/lists/' . $listId);
     }
@@ -65,10 +66,10 @@ class MemberController extends Controller
      */
     public function show($apiKey, $listId, $memberId)
     {
-        $auth = makeAuth($apiKey);
+        $auth = Mailchimp::makeAuth($apiKey);
         $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists/'. $listId . '/members/'. $memberId;
 
-        $response = mailChimpRequest($auth, $url);
+        $response = Mailchimp::request($auth, $url);
 
         return $response;
     }
@@ -81,10 +82,10 @@ class MemberController extends Controller
      */
     public function edit($apiKey, $listId, $memberId)
     {
-        $auth = makeAuth($apiKey);
+        $auth = Mailchimp::makeAuth($apiKey);
         $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists/'. $listId . '/members/' . $memberId;
 
-        $response = mailChimpRequest($auth, $url);
+        $response = Mailchimp::request($auth, $url);
         return view('members.edit', ['key' => $apiKey, 'listId'=>$listId, 'member'=>$response]);
     }
 
@@ -97,7 +98,7 @@ class MemberController extends Controller
      */
     public function update(Request $request, $apiKey, $listId, $memberEmail)
     {
-        $auth = makeAuth($apiKey);
+        $auth = Mailchimp::makeAuth($apiKey);
         $hash = md5(strtolower($memberEmail));
         $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists/' . $listId . '/members/' . $hash;
 
@@ -107,7 +108,7 @@ class MemberController extends Controller
 
         }';
 
-        $response = mailChimpRequest($auth, $url, 'PATCH', $body);
+        $response = Mailchimp::request($auth, $url, 'PATCH', $body);
 
         return redirect('/'.$apiKey. '/lists/' . $listId);
     }

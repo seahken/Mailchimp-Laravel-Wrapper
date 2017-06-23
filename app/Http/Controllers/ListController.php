@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mailchimp;
 
 class ListController extends Controller
 {
@@ -34,7 +35,7 @@ class ListController extends Controller
      */
     public function store(Request $request, $apiKey)
     {
-        $auth = makeAuth($apiKey);
+        $auth = Mailchimp::makeAuth($apiKey);
         $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists';
 
         $body = '{
@@ -57,7 +58,7 @@ class ListController extends Controller
             "email_type_option" : '. $request->email_type_option .'
         }';
 
-        $response = mailChimpRequest($auth, $url, 'POST', $body);
+        $response = Mailchimp::request($auth, $url, 'POST', $body);
 
         return redirect('/'.$apiKey);
 
@@ -71,10 +72,10 @@ class ListController extends Controller
      */
     public function show($apiKey, $id)
     {
-        $auth = makeAuth($apiKey);
+        $auth = Mailchimp::makeAuth($apiKey);
         $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists/'. $id;
 
-        $response = mailChimpRequest($auth, $url);
+        $response = Mailchimp::request($auth, $url);
 
         return view('lists.show', ['list'=>$response, 'key'=> $apiKey]);
     }
