@@ -124,6 +124,8 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+    'mailchimp_api_key' => env('MAILCHIMP_API_KEY', ''),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

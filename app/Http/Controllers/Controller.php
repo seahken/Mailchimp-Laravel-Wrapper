@@ -19,9 +19,12 @@ class Controller extends BaseController
         // $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists?count=1000';
         // $response = mailChimpRequest($auth, $url);
 
-        $auth = Mailchimp::makeAuth($apiKey);
-        $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists?count=1000';
-        $response = Mailchimp::request($auth, $url);
+        // $auth = Mailchimp::makeAuth($apiKey);
+        // $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists?count=1000';
+        // $response = Mailchimp::request($auth, $url);
+        $client = new MailChimp(config('app.mailchimp_api_key'));
+        $response = $client->getLists();
+
 
         // dd($response['lists']);
         return view('data', [
@@ -33,11 +36,13 @@ class Controller extends BaseController
 
     public function auth(Request $request)
     {
-        $auth = Mailchimp::makeAuth($request->apiKey);
-        $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0';
-        $response = Mailchimp::request($auth, $url);
+        // $auth = Mailchimp::makeAuth($request->apiKey);
+        // $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0';
+        // $response = Mailchimp::request($auth, $url);
 
-        return redirect('/'.$auth['apiKey']);
+        // return redirect('/'.$auth['apiKey']);
+
+        return redirect('/'.$request->apiKey);
 
     }
 }
