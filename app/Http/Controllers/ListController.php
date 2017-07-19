@@ -42,7 +42,6 @@ class ListController extends Controller
         $newList = $mailchimp->storeList($request);
 
         return redirect('/lists');
-
     }
 
     /**

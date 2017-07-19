@@ -58,6 +58,17 @@ class Mailchimp
       return $this->request($url, 'POST', $body);
     }
 
+    public function storeMember($request, $listId)
+    {
+        $url = 'https://'. $this->auth['dc'] .'.api.mailchimp.com/3.0/lists/' . $listId . '/members';
+        $body = '{
+            "email_address" : "'. $request->email_address .'",
+            "status" : "'. $request->status .'"
+        }';
+
+        return $this->request($url, 'POST', $body);
+    }
+
     private function request($url, $type = 'GET', $body = '')
     {
         $client = new Client();

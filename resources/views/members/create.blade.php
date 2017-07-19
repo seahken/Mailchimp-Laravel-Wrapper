@@ -5,9 +5,9 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/{{$key}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="/{{$key}}/lists/{{$list['id']}}">List</a></li>
-                <li class="breadcrumb-item"><a href="/{{$key}}/lists/{{$list['id']}}/members/">Member</a></li>
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/lists/{{$listId}}">List</a></li>
+                <li class="breadcrumb-item"><a href="/lists/{{$listId}}/members/">Member</a></li>
                 <li class="breadcrumb-item active">Create</li>
             </ol>
         </div>
@@ -18,13 +18,9 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    <label class="col-md-4 control-label">API Key</label>
-                    <div class="col-md-6">
-                        <p>{{ $key }}</p>
-                    </div>
                     <label class="col-md-4 control-label">List</label>
                     <div class="col-md-6">
-                        <p>{{ $list['name'] }}</p>
+                        <p>{{ $listId }}</p>
                     </div>
                 </div>
             </div>
@@ -36,7 +32,7 @@
                 </div>
 
                 <div class="panel-body">
-                    <form action="/{{ $key }}/lists/{{ $list['id'] }}/members" method="POST">
+                    <form action="/lists/{{ $listId }}/members" method="POST">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="email_address">Email</label>
