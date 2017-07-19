@@ -16,9 +16,12 @@ Route::get('/', function () {
 });
 
 Route::post('/', 'Controller@auth');
-Route::get('/{apiKey}', 'Controller@data');
-Route::resource('/{apiKey}/lists', 'ListController');
-Route::resource('/{apiKey}/lists/{listId}/members', 'MemberController');
+
+Route::resource('/lists', 'ListController');
+Route::resource('/lists/{listId}/members', 'MemberController');
+// Route::get('/{apiKey}', 'Controller@data');
+// Route::resource('/{apiKey}/lists', 'ListController');
+// Route::resource('/{apiKey}/lists/{listId}/members', 'MemberController');
 
 Auth::routes();
 

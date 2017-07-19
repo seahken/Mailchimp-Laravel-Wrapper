@@ -12,14 +12,11 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($apiKey, $listId)
+    public function index($listId)
     {
-        $auth = Mailchimp::makeAuth($apiKey);
-        $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists/'. $listId . '/members?count=1000';
-
-        $response = Mailchimp::request($auth, $url);
-
-        return view('members.index', ['key' => $apiKey, 'members'=>$response['members'], 'listId'=>$listId]);
+        $mailchimp = new Mailchimp();
+        $members = $mailchimp->getMembers($listId);
+        return view('members.index', ['members'=>$members, 'listId'=>$listId]);
     }
 
     /**

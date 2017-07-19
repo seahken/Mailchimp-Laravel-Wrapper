@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/{{$key}}">Home</a></li>
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
                 <li class="breadcrumb-item">List</li>
                 <li class="breadcrumb-item active">Create</li>
             </ol>
@@ -20,8 +20,8 @@
                     <label class="col-md-4 control-label">API Key</label>
 
                     <div class="col-md-6">
-                        <p>{{ $key }}</p>
-                    </div>                  
+                        <p></p>
+                    </div>
 
                 </div>
             </div>
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="panel-body">
-                    <form action="/{{ $key }}/lists" method="POST">
+                    <form action="/lists" method="POST">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="name">Name</label>

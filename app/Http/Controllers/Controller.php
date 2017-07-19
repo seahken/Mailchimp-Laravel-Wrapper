@@ -22,9 +22,10 @@ class Controller extends BaseController
         // $auth = Mailchimp::makeAuth($apiKey);
         // $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists?count=1000';
         // $response = Mailchimp::request($auth, $url);
-        $client = new MailChimp(config('app.mailchimp_api_key'));
+        $client = new MailChimp();
         $response = $client->getLists();
 
+        return $response;
 
         // dd($response['lists']);
         return view('data', [

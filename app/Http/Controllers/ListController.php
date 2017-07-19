@@ -14,7 +14,10 @@ class ListController extends Controller
      */
     public function index()
     {
-        //
+        $mailchimp = new Mailchimp();
+        $lists = $mailchimp->getLists();
+
+        return view('lists.index', ['lists'=>$lists]);
     }
 
     /**
@@ -22,9 +25,9 @@ class ListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($apiKey)
+    public function create()
     {
-        return view('lists.create', ['key' => $apiKey]);
+        return view('lists.create');
     }
 
     /**
@@ -33,34 +36,12 @@ class ListController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $apiKey)
+    public function store(Request $request)
     {
-        $auth = Mailchimp::makeAuth($apiKey);
-        $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists';
+        $mailchimp = new Mailchimp();
+        $newList = $mailchimp->storeList($request);
 
-        $body = '{
-            "name" : "'. $request->name .'",
-            "contact" : {
-                "company" : "'. $request->contact_company .'",
-                "address1" : "'. $request->contact_address .'",
-                "city" : "'. $request->contact_city .'",
-                "state" : "'. $request->contact_state .'",
-                "zip" : "'. $request->contact_zip .'",
-                "country" : "'. $request->contact_country .'"
-            },
-            "permission_reminder" : "'. $request->permission_reminder .'",
-            "campaign_defaults" : {
-                "from_name" : "'. $request->campaign_defaults_from_name .'",
-                "from_email" : "'. $request->campaign_defaults_from_email .'",
-                "subject" : "'. $request->campaign_defaults_subject .'",
-                "language" : "'. $request->campaign_defaults_language .'"
-            },
-            "email_type_option" : '. $request->email_type_option .'
-        }';
-
-        $response = Mailchimp::request($auth, $url, 'POST', $body);
-
-        return redirect('/'.$apiKey);
+        return redirect('/lists');
 
     }
 
@@ -70,14 +51,19 @@ class ListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($apiKey, $id)
+    public function show($id)
     {
-        $auth = Mailchimp::makeAuth($apiKey);
-        $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists/'. $id;
+        // $auth = Mailchimp::makeAuth($apiKey);
+        // $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists/'. $id;
+        //
+        // $response = Mailchimp::request($auth, $url);
+        //
+        // return view('lists.show', ['list'=>$response, 'key'=> $apiKey]);
 
-        $response = Mailchimp::request($auth, $url);
+        $mailchimp = new Mailchimp();
+        $members = $mailchimp->getMembers($id);
 
-        return view('lists.show', ['list'=>$response, 'key'=> $apiKey]);
+        return $members;
     }
 
     /**

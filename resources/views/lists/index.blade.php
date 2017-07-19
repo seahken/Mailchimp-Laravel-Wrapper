@@ -5,8 +5,8 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/lists">Lists</a></li>
-                <li class="breadcrumb-item active">List</li>
+                <li class="breadcrumb-item active">Home</li>
+
             </ol>
         </div>
     </div>
@@ -22,24 +22,24 @@
                         <p></p>
                     </div>
 
-                    <label class="col-md-4 control-label">Member Count</label>
-                    <div class="col-md-6">
-                        <p>{{ $list['stats']['member_count'] }}</p>
-                    </div>
-
                 </div>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{ $list['name'] }}
-
+                    Lists
+                    <a href="/lists/create" style="float:right">Add New List</a>
                 </div>
 
                 <div class="panel-body">
-                    <p><a href="/lists/{{ $list['id'] }}/members/create">Add New Members</a></p>
-                    <p><a href="/lists/{{ $list['id'] }}/members">See Existing Members</a></p>
+                    @foreach($lists as $list)
+                        <p>
+                            {{ $list['name'] }}
+                            <a href="/lists/{{$list['id']}}/members" style="float:right">Details</a>
+                        </p>
+                    @endforeach
+
                 </div>
             </div>
         </div>
