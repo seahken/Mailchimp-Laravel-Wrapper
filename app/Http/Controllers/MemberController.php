@@ -65,13 +65,12 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($apiKey, $listId, $memberId)
+    public function edit($listId, $memberId)
     {
-        $auth = Mailchimp::makeAuth($apiKey);
-        $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists/'. $listId . '/members/' . $memberId;
+        $mailchimp = new Mailchimp();
+        $member = $mailchimp->getMember($listId, $memberId);
 
-        $response = Mailchimp::request($auth, $url);
-        return view('members.edit', ['key' => $apiKey, 'listId'=>$listId, 'member'=>$response]);
+        return view('members.edit', ['listId'=>$listId, 'member'=>$member]);
     }
 
     /**
@@ -81,21 +80,12 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $apiKey, $listId, $memberEmail)
+    public function update(Request $request, $listId, $memberEmail)
     {
-        $auth = Mailchimp::makeAuth($apiKey);
-        $hash = md5(strtolower($memberEmail));
-        $url = $url = 'https://'. $auth['dc'] .'.api.mailchimp.com/3.0/lists/' . $listId . '/members/' . $hash;
+        $mailchimp = new Mailchimp();
+        $updatedMember = $mailchimp->updateMember($request, $listId, $memberEmail);
 
-        $body = '{
-            "email_address" : "'. $request->email_address .'",
-            "status" : "'. $request->status .'"
-
-        }';
-
-        $response = Mailchimp::request($auth, $url, 'PATCH', $body);
-
-        return redirect('/'.$apiKey. '/lists/' . $listId);
+        return redirect('/lists/' . $listId . '/members');
     }
 
     /**

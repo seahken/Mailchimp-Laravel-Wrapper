@@ -124,6 +124,19 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Mailchimp Configuration
+    |--------------------------------------------------------------------------
+    |
+    | 
+    |
+    |
+    |
+    | Available Settings: "
+    |
+    */
+
     'mailchimp_api_key' => env('MAILCHIMP_API_KEY', ''),
 
     /*

@@ -31,6 +31,13 @@ class Mailchimp
         return $this->request($url)['members'];
     }
 
+    public function getMember($listId, $memberId)
+    {
+        $url = 'https://'. $this->auth['dc'] .'.api.mailchimp.com/3.0/lists/'. $listId . '/members/' . $memberId;
+
+        return $this->request($url);
+    }
+
     public function storeList($request)
     {
       $url = 'https://'. $this->auth['dc'] .'.api.mailchimp.com/3.0/lists';
@@ -69,14 +76,31 @@ class Mailchimp
         return $this->request($url, 'POST', $body);
     }
 
+    public function updateMember($request, $listId, $memberEmail)
+    {
+        $hash = md5(strtolower($memberEmail));
+        $url = 'https://'. $this->auth['dc'] .'.api.mailchimp.com/3.0/lists/' . $listId . '/members/' . $hash;
+
+        $body = '{
+            "email_address" : "'. $request->email_address .'",
+            "status" : "'. $request->status .'"
+        }';
+
+        return $this->request($url, 'PATCH', $body);
+    }
+
     private function request($url, $type = 'GET', $body = '')
     {
         $client = new Client();
-        $response = $client->request($type, $url, [
-          'auth' => ['user', $this->auth['apiKey']],
-          'body' => $body
-        ]);
-
+        try {
+          $response = $client->request($type, $url, [
+            'auth' => ['user', $this->auth['apiKey']],
+            'body' => $body
+          ]);
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+          dd($e->getResponse()->getBody()->getContents());
+        }
+        
         return json_decode($response->getBody(), true);
     }
 

@@ -5,9 +5,9 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/{{$key}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="/{{$key}}/lists/{{$listId}}">List</a></li>
-                <li class="breadcrumb-item"><a href="/{{$key}}/lists/{{$listId}}/members/">Member</a></li>
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/lists/{{$listId}}">List</a></li>
+                <li class="breadcrumb-item"><a href="/lists/{{$listId}}/members/">Member</a></li>
                 <li class="breadcrumb-item active">Edit</li>
             </ol>
         </div>
@@ -20,7 +20,7 @@
                 <div class="panel-body">
                     <label class="col-md-4 control-label">API Key</label>
                     <div class="col-md-6">
-                        <p>{{ $key }}</p>
+
                     </div>
                     <label class="col-md-4 control-label">Member</label>
                     <div class="col-md-6">
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="panel-body">
-                    <form action="/{{ $key }}/lists/{{ $listId }}/members/{{ $member['email_address'] }}" method="POST">
+                    <form action="/lists/{{ $listId }}/members/{{ $member['email_address'] }}" method="POST">
                         <input type="hidden" name="_method" value="PATCH">
                         {{ csrf_field() }}
                         <div class="form-group">

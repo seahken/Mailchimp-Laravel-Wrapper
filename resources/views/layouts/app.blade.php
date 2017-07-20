@@ -13,6 +13,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon.png')}}">
+
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
@@ -40,7 +42,7 @@
                     </a>
                 </div>
 
-        
+
             </div>
         </nav>
 
