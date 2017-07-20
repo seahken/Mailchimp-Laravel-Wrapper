@@ -7,10 +7,6 @@ use GuzzleHttp\Client;
 
 class Mailchimp
 {
-    protected $url;
-    protected $key;
-    protected $auth;
-
     public function __construct()
     {
         $this->key = config('app.mailchimp_api_key');
@@ -89,7 +85,7 @@ class Mailchimp
         return $this->request($url, 'PATCH', $body);
     }
 
-    private function request($url, $type = 'GET', $body = '')
+    protected function request($url, $type = 'GET', $body = '')
     {
         $client = new Client();
         try {
@@ -100,11 +96,11 @@ class Mailchimp
         } catch (\GuzzleHttp\Exception\ClientException $e) {
           dd($e->getResponse()->getBody()->getContents());
         }
-        
+
         return json_decode($response->getBody(), true);
     }
 
-    private function makeAuth($apiKey)
+    protected function makeAuth($apiKey)
     {
       $auth['apiKey'] = $apiKey;
       $auth['dc'] = substr($auth['apiKey'], -3);
