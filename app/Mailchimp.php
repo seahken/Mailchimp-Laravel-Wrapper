@@ -7,9 +7,11 @@ use GuzzleHttp\Client;
 
 class Mailchimp
 {
-    public function __construct()
+    private $key;
+    
+    public function __construct($key = null)
     {
-        $this->key = config('app.mailchimp_api_key');
+        $this->key = $key ?? config('app.mailchimp_api_key');
         $this->auth = $this->makeAuth($this->key);
     }
 
