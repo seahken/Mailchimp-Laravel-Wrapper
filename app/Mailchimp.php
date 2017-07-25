@@ -8,7 +8,7 @@ use GuzzleHttp\Client;
 class Mailchimp
 {
     private $key;
-    
+
     public function __construct($key = null)
     {
         $this->key = $key ?? config('app.mailchimp_api_key');
@@ -76,7 +76,7 @@ class Mailchimp
 
     public function updateMember($request, $listId, $memberEmail)
     {
-        $hash = md5(strtolower($memberEmail));
+        $hash = $this->memberHash($memberEmail);
         $url = 'https://'. $this->auth['dc'] .'.api.mailchimp.com/3.0/lists/' . $listId . '/members/' . $hash;
 
         $body = '{
@@ -109,5 +109,12 @@ class Mailchimp
 
       return $auth;
     }
+
+    protected function memberHash($email)
+    {
+        return md5(strtolower($email));
+    }
+
+
 
 }
