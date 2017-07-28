@@ -1,6 +1,6 @@
 # README #
 
-This repository is created for writing test codes for Loyalty Corp Interview.
+This repository is created for a simple Laravel wrapper for Mailchimp API.
 The app connects to Mailchimp API using an API key and has 3 functions:
 
 1. Creating new list(s)
