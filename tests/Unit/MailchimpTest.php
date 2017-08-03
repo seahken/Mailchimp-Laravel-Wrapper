@@ -26,7 +26,7 @@ class MailchimpTest extends TestCase
         $lists = $mailchimp->getLists();
     }
 
-    public function testGetLists()
+    public function testMailchimpConnection()
     {
         $mailchimp = new Mailchimp();
         $lists = $mailchimp->getLists();

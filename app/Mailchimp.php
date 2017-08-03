@@ -96,7 +96,7 @@ class Mailchimp
             'body' => $body
           ]);
         } catch (\GuzzleHttp\Exception\ClientException $e) {
-          dd($e->getResponse()->getBody()->getContents());
+          echo $e->getResponse()->getBody()->getContents();
         }
 
         return json_decode($response->getBody(), true);
