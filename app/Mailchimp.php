@@ -8,6 +8,8 @@ use GuzzleHttp\Client;
 class Mailchimp
 {
     private $key;
+    private $url;
+    private $array;
 
     public function __construct($key = null)
     {
@@ -15,30 +17,49 @@ class Mailchimp
         $this->auth = $this->makeAuth($this->key);
     }
 
-    public function getLists($limit = 100)
+    public function lists()
     {
-        $url = 'https://'. $this->auth['dc'] .'.api.mailchimp.com/3.0/lists?count=' . $limit;
+        $this->url = 'https://'. $this->auth['dc'] .'.api.mailchimp.com/3.0/lists?';
+        $this->array = 'lists';
 
-        return $this->request($url)['lists'];
+        return $this;
     }
 
-    public function getMembers($id , $limit = 100)
+    public function members($id)
     {
-        $url = 'https://'. $this->auth['dc'] .'.api.mailchimp.com/3.0/lists/'. $id . '/members?count=' . $limit;
+        $this->url = 'https://'. $this->auth['dc'] .'.api.mailchimp.com/3.0/lists/'. $id . '/members?';
+        $this->array = 'members';
 
-        return $this->request($url)['members'];
+        return $this;
     }
 
-    public function getMember($listId, $memberId)
+    public function member($listId, $memberId)
     {
-        $url = 'https://'. $this->auth['dc'] .'.api.mailchimp.com/3.0/lists/'. $listId . '/members/' . $memberId;
+        $this->url = 'https://'. $this->auth['dc'] .'.api.mailchimp.com/3.0/lists/'. $listId . '/members/' . $memberId;
 
-        return $this->request($url);
+        return $this;
+    }
+
+    public function get($limit = 100)
+    {
+        $this->url .= '&count=' . $limit;
+        return $this->request($this->url)[$this->array];
+    }
+
+    public function paginate($limit = 100)
+    {
+        $this->url .= '&offset=' . $limit;
+        return $this->url;
+    }
+
+    public function show()
+    {
+        return $this->request($this->url);
     }
 
     public function storeList($request)
     {
-      $url = 'https://'. $this->auth['dc'] .'.api.mailchimp.com/3.0/lists';
+      $this->url = 'https://'. $this->auth['dc'] .'.api.mailchimp.com/3.0/lists';
 
       $body = '{
           "name" : "'. $request->name .'",
@@ -60,31 +81,31 @@ class Mailchimp
           "email_type_option" : '. $request->email_type_option .'
       }';
 
-      return $this->request($url, 'POST', $body);
+      return $this->request($this->url, 'POST', $body);
     }
 
     public function storeMember($request, $listId)
     {
-        $url = 'https://'. $this->auth['dc'] .'.api.mailchimp.com/3.0/lists/' . $listId . '/members';
+        $this->url = 'https://'. $this->auth['dc'] .'.api.mailchimp.com/3.0/lists/' . $listId . '/members';
         $body = '{
             "email_address" : "'. $request->email_address .'",
             "status" : "'. $request->status .'"
         }';
 
-        return $this->request($url, 'POST', $body);
+        return $this->request($this->url, 'POST', $body);
     }
 
     public function updateMember($request, $listId, $memberEmail)
     {
         $hash = $this->memberHash($memberEmail);
-        $url = 'https://'. $this->auth['dc'] .'.api.mailchimp.com/3.0/lists/' . $listId . '/members/' . $hash;
+        $this->url = 'https://'. $this->auth['dc'] .'.api.mailchimp.com/3.0/lists/' . $listId . '/members/' . $hash;
 
         $body = '{
             "email_address" : "'. $request->email_address .'",
             "status" : "'. $request->status .'"
         }';
 
-        return $this->request($url, 'PATCH', $body);
+        return $this->request($this->url, 'PATCH', $body);
     }
 
     protected function request($url, $type = 'GET', $body = '')

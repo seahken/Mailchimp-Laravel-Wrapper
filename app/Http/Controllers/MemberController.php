@@ -15,7 +15,7 @@ class MemberController extends Controller
     public function index($listId)
     {
         $mailchimp = new Mailchimp();
-        $members = $mailchimp->getMembers($listId);
+        $members = $mailchimp->members($listId)->get(1000);
         return view('members.index', ['members'=>$members, 'listId'=>$listId]);
     }
 
@@ -68,7 +68,7 @@ class MemberController extends Controller
     public function edit($listId, $memberId)
     {
         $mailchimp = new Mailchimp();
-        $member = $mailchimp->getMember($listId, $memberId);
+        $member = $mailchimp->member($listId, $memberId)->show();
 
         return view('members.edit', ['listId'=>$listId, 'member'=>$member]);
     }

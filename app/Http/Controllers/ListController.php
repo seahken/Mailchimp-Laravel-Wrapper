@@ -15,7 +15,7 @@ class ListController extends Controller
     public function index()
     {
         $mailchimp = new Mailchimp();
-        $lists = $mailchimp->getLists();
+        $lists = $mailchimp->lists()->get();
 
         return view('lists.index', ['lists'=>$lists]);
     }
@@ -60,7 +60,7 @@ class ListController extends Controller
         // return view('lists.show', ['list'=>$response, 'key'=> $apiKey]);
 
         $mailchimp = new Mailchimp();
-        $members = $mailchimp->getMembers($id);
+        $members = $mailchimp->members($id)->get();
 
         return $members;
     }

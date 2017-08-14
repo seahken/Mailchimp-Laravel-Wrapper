@@ -23,13 +23,13 @@ class MailchimpTest extends TestCase
     {
         $this->expectException('\Exception');
         $mailchimp = new Mailchimp('alfmweak');
-        $lists = $mailchimp->getLists();
+        $lists = $mailchimp->lists()->get();
     }
 
     public function testMailchimpConnection()
     {
         $mailchimp = new Mailchimp();
-        $lists = $mailchimp->getLists();
+        $lists = $mailchimp->lists()->get();
         $this->assertTrue(true);
     }
 
